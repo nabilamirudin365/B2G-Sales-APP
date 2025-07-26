@@ -32,6 +32,9 @@
                 <a href="{{ route('admin.orders.index') }}" class="flex items-center gap-3 py-2.5 px-4 rounded transition duration-200 hover:bg-teal-600 {{ request()->routeIs('admin.orders.*') ? 'bg-teal-600' : '' }}">
                     <span>🛒</span><span>Manajemen Pesanan</span>
                 </a>
+                <a href="{{ route('admin.b2g_potentials.index') }}" class="flex items-center gap-3 py-2.5 px-4 rounded transition duration-200 hover:bg-teal-600 {{ request()->routeIs('admin.b2g_potentials.*') ? 'bg-teal-600' : '' }}">
+                    <span>🛰️</span><span>Potensi SKPD</span>
+                </a>
             </nav>
             <div class="absolute bottom-0 w-64 p-4">
                 <form method="POST" action="{{ route('logout') }}">

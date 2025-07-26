@@ -20,6 +20,7 @@ use App\Http\Controllers\Sales\CheckoutController;
 use App\Http\Controllers\Sales\OrderController;
 use App\Http\Controllers\Admin\OrderManagementController;
 use App\Http\Controllers\Sales\B2gController;
+use App\Http\Controllers\Admin\B2gPotentialController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -64,6 +65,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/orders', [OrderManagementController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderManagementController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}', [OrderManagementController::class, 'update'])->name('orders.update');
+
+    //route b2g potential 
+    Route::resource('b2g_potentials', B2gPotentialController::class)->only(['index', 'show', 'destroy']);
 });
 
 Route::middleware(['auth', 'role:tim_b2g,tim_merchant'])->prefix('sales')->name('sales.')->group(function () {
