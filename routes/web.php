@@ -19,6 +19,7 @@ use App\Http\Controllers\Sales\CartController;
 use App\Http\Controllers\Sales\CheckoutController;
 use App\Http\Controllers\Sales\OrderController;
 use App\Http\Controllers\Admin\OrderManagementController;
+use App\Http\Controllers\Sales\B2gController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -89,6 +90,9 @@ Route::middleware(['auth', 'role:tim_b2g,tim_merchant'])->prefix('sales')->name(
 
     //route order
     Route::resource('orders', OrderController::class)->only(['index', 'show']);
+
+    //route B2G
+    Route::resource('b2g_potentials', B2gController::class);
 });
 
 Route::get('/test-role', function () {

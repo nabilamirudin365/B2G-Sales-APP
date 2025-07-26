@@ -52,12 +52,13 @@
     <i class="fas fa-history fa-fw mr-4"></i>
     <span>Riwayat Pesanan</span>
 </a>
-
-                <a href="#" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 border-l-4 border-transparent">
+                @if(Auth::user()->role == 'tim_b2g')
+                <a href="{{ route('sales.b2g_potentials.index') }}" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 border-l-4 border-transparent">
                     <i class="fas fa-file-contract fa-fw mr-4"></i>
                     <span>Potensi SKPD</span>
                 </a>
             </nav>
+                @endif 
 
             <div class="absolute bottom-0 w-full border-t border-white/10 p-4">
                 <div class="flex items-center">
