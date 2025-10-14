@@ -12,8 +12,8 @@
                 &larr; Kembali ke Dashboard
                 </a>
 
-                <a href="{{ route('admin.products.create') }}" class="bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-lg">
-                + Tambah Produk Baru
+                <a href="{{ route('admin.categories.create') }}" class="bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-lg">
+                + Tambah Kategori Baru
                 </a>
             </div>
 

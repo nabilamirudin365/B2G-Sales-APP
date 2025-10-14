@@ -20,15 +20,4 @@ class OrderManagementController extends Controller
         return view('admin.orders.show', compact('order'));
     }
 
-    public function update(Request $request, Order $order)
-    {
-        $request->validate([
-            'status' => 'required|in:pending,processing,shipped,completed,cancelled',
-        ]);
-
-        $order->status = $request->status;
-        $order->save();
-
-        return redirect()->route('admin.orders.show', $order)->with('success', 'Status pesanan berhasil diperbarui.');
-    }
 }

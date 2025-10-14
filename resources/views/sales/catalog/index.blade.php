@@ -6,6 +6,13 @@
     @endif
     <div class="bg-white p-6 rounded-xl shadow-md mb-8">
         <h1 class="text-2xl font-bold text-blue-900">E-Katalog Produk</h1>
+        
+        @if(session('order_for_merchant'))
+            <div class="mt-2 p-3 bg-blue-50 text-blue-800 rounded-lg text-sm">
+                Membuat pesanan untuk: <strong>{{ session('order_for_merchant')['name'] }}</strong>
+            </div>
+        @endif
+
         <p class="text-gray-500 mt-1">Pilih produk yang akan dipesan untuk merchant.</p>
     </div>
 
@@ -19,7 +26,6 @@
                         <i class="fas fa-image fa-3x text-gray-400"></i>
                     @endif
                 </div>
-
                 <div class="p-4">
                     <p class="text-xs text-gray-500 uppercase">{{ $product->category->name }}</p>
                     <h3 class="text-lg font-bold text-gray-800 truncate">{{ $product->name }}</h3>
@@ -29,9 +35,11 @@
                     <div class="mt-4">
                         <form action="{{ route('sales.cart.add', $product->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="w-full bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-800 transition duration-300 flex items-center justify-center gap-2">
-                        <i class="fas fa-cart-plus"></i>
-                        <span>Tambah</span>
+                        <button type="submit" class="w-full bg-blue-700 text-white py-2 rounded-lg hover:bg-blue-800 transition duration-300 flex items-center justify-center gap-2"
+                            {{-- Nonaktifkan tombol jika tidak ada sesi pesanan --}}
+                            @if(!session('order_for_merchant')) disabled title="Pilih merchant terlebih dahulu" @endif > 
+                            <i class="fas fa-cart-plus"></i>
+                            <span>Tambah</span>
                         </button>
                         </form>
                     </div>
@@ -49,5 +57,4 @@
             {{ $products->links() }}
         </div>
     @endif
-
 </x-sales-layout>

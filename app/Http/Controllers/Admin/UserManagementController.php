@@ -36,7 +36,7 @@ class UserManagementController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['required', 'in:admin,tim_b2g,tim_merchant'],
+            'role' => ['required', 'in:admin,tim_b2g,tim_merchant,tim_gudang'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -66,7 +66,7 @@ class UserManagementController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'role' => ['required', 'in:admin,tim_b2g,tim_merchant'],
+            'role' => ['required', 'in:admin,tim_b2g,tim_merchant,tim_gudang'],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ]);
 

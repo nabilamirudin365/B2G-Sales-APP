@@ -44,9 +44,10 @@ class AuthenticatedSessionController extends Controller
 
         // Gabungkan case untuk kedua role sales
         case 'tim_b2g':
-        case 'tim_merchant': // <-- INI PERBAIKANNYA
+        case 'tim_merchant': 
             return redirect('/sales/dashboard');
-
+        case 'tim_gudang': 
+        return redirect('/warehouse/dashboard');
         default:
             return redirect('/'); // fallback
     }

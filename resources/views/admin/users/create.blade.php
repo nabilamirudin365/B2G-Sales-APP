@@ -41,6 +41,7 @@
                                 <select name="role" id="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500">
                                     <option value="tim_merchant">Tim Merchant</option>
                                     <option value="tim_b2g">Tim B2G</option>
+                                    <option value="tim_gudang">Tim Gudang</option>
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Visit;
 use App\Models\Merchant;
-use App\Models\B2gPotential; // <-- Import model baru
+use App\Models\B2gPotential; 
 
 class DashboardController extends Controller
 {
@@ -18,6 +18,7 @@ class DashboardController extends Controller
         // 1. Ambil data yang bersifat umum untuk semua role sales
         $totalVisits = Visit::where('user_id', $user->id)->count();
         $totalMerchants = Merchant::where('user_id', $user->id)->count();
+        $totalPotential = B2gPotential::where('user_id', $user->id)->count();
 
         // 2. Siapkan variabel untuk data spesifik role
         $roleSpecificData = [];
@@ -40,6 +41,7 @@ class DashboardController extends Controller
         $data = array_merge([
             'totalVisits' => $totalVisits,
             'totalMerchants' => $totalMerchants,
+            'totalPotential' => $totalPotential,
             'latestActivities' => $latestActivities,
         ], $roleSpecificData);
 

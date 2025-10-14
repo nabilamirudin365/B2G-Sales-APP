@@ -18,7 +18,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Merchant</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal Pengajuan</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase"></th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -35,7 +35,20 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{{ route('sales.merchants.show', $merchant->id) }}" class="text-indigo-600 hover:text-indigo-900 font-bold">Lihat Detail</a>
+                                <!-- ===== PERUBAHAN UTAMA DI SINI ===== -->
+                                <div class="flex justify-end items-center gap-4">
+                                    <a href="{{ route('sales.merchants.show', $merchant->id) }}" class="text-indigo-600 hover:text-indigo-900 font-bold">Detail</a>
+                                    
+                                    @if ($merchant->status == 'approved')
+                                        <form action="{{ route('sales.orders.start', $merchant->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="text-green-600 hover:text-green-900 font-bold">
+                                                Buat Pesanan
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                                <!-- ===== AKHIR PERUBAHAN ===== -->
                             </td>
                         </tr>
                         @empty

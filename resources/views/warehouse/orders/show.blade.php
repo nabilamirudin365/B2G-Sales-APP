@@ -1,10 +1,16 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Detail Pesanan #{{ $order->order_number }}</h2>
-    </x-slot>
-
+<x-warehouse-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h2 class="font-semibold text-2xl text-gray-800 leading-tight mb-6">
+                Detail Pesanan #{{ $order->order_number }}
+            </h2>
+
+            @if (session('success'))
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-md" role="alert">
+                    <p>{{ session('success') }}</p>
+                </div>
+            @endif
+            
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 bg-gray-50 border-b flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div class="text-sm">
@@ -12,17 +18,19 @@
                         <p class="text-gray-600">Untuk Merchant: <span class="font-semibold">{{ $order->merchant->name ?? 'N/A' }}</span></p>
                         <p class="text-gray-600">Tanggal: <span class="font-semibold">{{ $order->created_at->format('d F Y') }}</span></p>
                     </div>
-                    <div class="text-right">
-                        <span class="font-semibold">Status Saat Ini:</span>
-                        <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full 
-                            {{ $order->status == 'completed' ? 'bg-green-100 text-green-800' : '' }}
-                            {{ $order->status == 'shipped' ? 'bg-blue-100 text-blue-800' : '' }}
-                            {{ $order->status == 'processing' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                            {{ $order->status == 'pending' ? 'bg-gray-100 text-gray-800' : '' }}
-                            {{ $order->status == 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
-                            {{ ucfirst($order->status) }}
-                        </span>
-                    </div>
+                    <form action="{{ route('warehouse.orders.update', $order) }}" method="POST" class="flex items-center gap-3">
+                        @csrf
+                        @method('PATCH')
+                        <label for="status" class="font-semibold">Ubah Status:</label>
+                        <select name="status" id="status" class="rounded-md border-gray-300 shadow-sm">
+                            <option value="pending" @selected($order->status == 'pending')>Pending</option>
+                            <option value="processing" @selected($order->status == 'processing')>Processing</option>
+                            <option value="shipped" @selected($order->status == 'shipped')>Shipped</option>
+                            <option value="completed" @selected($order->status == 'completed')>Completed</option>
+                            <option value="cancelled" @selected($order->status == 'cancelled')>Cancelled</option>
+                        </select>
+                        <button type="submit" class="bg-teal-700 text-white font-bold py-2 px-4 rounded-lg">Update</button>
+                    </form>
                 </div>
 
                 <div class="p-6">
@@ -55,11 +63,9 @@
                     </table>
                 </div>
             </div>
-            <div class="flex justify-between items-center mb-6">
-                <a href="{{ route('admin.orders.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+            <a href="{{ route('warehouse.orders.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                     &larr; Kembali ke Riwayat Pesanan
                 </a>
-            </div>
         </div>
     </div>
-</x-app-layout>
+</x-warehouse-layout>

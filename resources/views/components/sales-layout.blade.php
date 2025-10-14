@@ -16,9 +16,13 @@
 <body class="font-sans antialiased bg-gray-100">
     <div class="flex min-h-screen">
         <aside class="w-72 bg-gradient-to-b from-blue-900 to-blue-700 text-white fixed h-full shadow-lg">
-            <div class="p-5 text-center border-b border-white/10">
-                <a href="{{ route('sales.dashboard') }}" class="text-xl font-bold">B2G Partnership</a>
-            </div>
+            @if(in_array(Auth::user()->role, ['tim_b2g', 'tim_merchant']))
+                <div class="p-5 text-center border-b border-white/10">
+                    <a class="text-xl font-bold">
+                        {{ Auth::user()->role == 'tim_b2g' ? 'B2G Partnership' : 'Merchant Partnership' }}
+                    </a>
+                </div>
+            @endif
 
             <nav class="mt-5">
                 <a href="{{ route('sales.dashboard') }}" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 {{ request()->routeIs('sales.dashboard') ? 'bg-white/10 border-l-4 border-blue-400 pl-5' : 'border-l-4 border-transparent' }}">
@@ -29,6 +33,7 @@
                     <i class="fas fa-clipboard-check fa-fw mr-4"></i>
                     <span>Laporan Visit</span>
                 </a>
+                @if(Auth::user()->role == 'tim_merchant')
                 <a href="{{ route('sales.merchants.index') }}" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 border-l-4 border-transparent">
                     <i class="fas fa-store fa-fw mr-4"></i>
                     <span>Akuisisi Merchant</span>
@@ -42,16 +47,17 @@
                     <i class="fas fa-shopping-cart fa-fw mr-4"></i>
                     <span>Keranjang</span>
                     </div>
-    @if(session('cart'))
-        <span class="bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-            {{ count(session('cart')) }}
-        </span>
-    @endif
-</a>
-<a href="{{ route('sales.orders.index') }}" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 {{ request()->routeIs('sales.orders.*') ? 'bg-white/10 border-l-4 border-blue-400 pl-5' : 'border-l-4 border-transparent' }}">
-    <i class="fas fa-history fa-fw mr-4"></i>
-    <span>Riwayat Pesanan</span>
-</a>
+                <a href="{{ route('sales.orders.index') }}" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 {{ request()->routeIs('sales.orders.*') ? 'bg-white/10 border-l-4 border-blue-400 pl-5' : 'border-l-4 border-transparent' }}">
+                    <i class="fas fa-history fa-fw mr-4"></i>
+                        <span>Riwayat Pesanan</span>
+                </a>
+                @endif
+                @if(session('cart'))
+                    <span class="bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ count(session('cart')) }}
+                    </span>
+                @endif
+                </a>
                 @if(Auth::user()->role == 'tim_b2g')
                 <a href="{{ route('sales.b2g_potentials.index') }}" class="flex items-center py-3 px-6 transition duration-300 hover:bg-white/10 border-l-4 border-transparent">
                     <i class="fas fa-file-contract fa-fw mr-4"></i>

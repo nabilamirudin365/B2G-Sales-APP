@@ -1,10 +1,8 @@
 <x-sales-layout>
     <div class="flex justify-between items-center bg-white p-6 rounded-xl shadow-md mb-8">
         <div>
-            @if(Auth::user()->role == 'tim_b2g')
-                <h1 class="text-2xl font-bold text-blue-900">Dashboard B2G Partnership</h1>
-            @else
-                <h1 class="text-2xl font-bold text-blue-900">Dashboard Merchant Partnership</h1>
+           @if(in_array(Auth::user()->role, ['tim_b2g', 'tim_merchant']))
+                <h1 class="text-2xl font-bold text-blue-900">{{ Auth::user()->role == 'tim_b2g' ? 'Dahboard B2G Partnership' : 'Dashboard Merchant Partnership' }}</h1>
             @endif
             <p class="text-gray-500 mt-1">Selamat datang kembali, {{ Auth::user()->name }}!</p>
         </div>
@@ -15,15 +13,17 @@
             <h3 class="text-sm font-medium text-gray-500">Total Visit Anda</h3>
             <p class="text-3xl font-bold text-blue-800 mt-2">{{ $totalVisits }}</p>
         </div>
+        @if(Auth::user()->role == 'tim_merchant')
         <div class="bg-white p-6 rounded-xl shadow-md transition hover:scale-105">
             <h3 class="text-sm font-medium text-gray-500">Total Akuisisi Merchant</h3>
             <p class="text-3xl font-bold text-blue-800 mt-2">{{ $totalMerchants }}</p>
         </div>
+        @endif
 
         @if(Auth::user()->role == 'tim_b2g')
             <div class="bg-white p-6 rounded-xl shadow-md transition hover:scale-105">
                 <h3 class="text-sm font-medium text-gray-500">Potensi SKPD</h3>
-                <p class="text-3xl font-bold text-blue-800 mt-2">0</p> </div>
+                <p class="text-3xl font-bold text-blue-800 mt-2">{{ $totalPotential }}</p> </div>
         @else
             <div class="bg-white p-6 rounded-xl shadow-md transition hover:scale-105">
                 <h3 class="text-sm font-medium text-gray-500">Kemitraan Aktif</h3>
